@@ -30,7 +30,7 @@ import json, os, sys, glob, sqlite3
 ROOT = os.path.dirname(os.path.abspath(__file__))
 REDIR_DIR = os.path.join(ROOT, "redirects")
 TARGETS = {
-    "service": os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "build", "Dictionary.db"),  # repo build/Dictionary.db; then: python export.py
+    "service": __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))), "db_path.py"))["dictionary_db"](),  # db_path.py (app copy or build/); then: python export.py
 }
 KETIV = "כתיב"
 

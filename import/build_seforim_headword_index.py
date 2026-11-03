@@ -52,14 +52,14 @@ except ImportError:
 
 
 # This script lives in import/ of the KitveiHakodeshDictionary repo. It writes into
-# build/Dictionary.db (made by build.py); then `python export.py` writes the change back
+# Dictionary.db (db_path.py; made by build.py); then `python export.py` writes the change back
 # into source/seforim_headword*.tsv, the committed source of truth.
 REPOSITORY_ROOT = os.path.abspath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
 )
 
 DICTIONARY_DATABASE_PATHS = [
-    os.path.join(REPOSITORY_ROOT, "build", "Dictionary.db"),
+    __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__))), "db_path.py"))["dictionary_db"](),
 ]
 
 # The plain (uncompressed) Zayit library. Its titles are the shorter spellings, which the

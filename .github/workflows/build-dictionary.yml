@@ -1,4 +1,4 @@
-name: Build Dictionary.db
+name: Verify Dictionary.db build
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: build-dictionary
@@ -37,13 +37,3 @@ jobs:
           git diff --exit-code -- source
           python build.py --out build/roundtrip.db
           python verify.py build/Dictionary.db build/roundtrip.db
-
-      - name: Publish release (marked latest)
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          TAG="dict-$(date -u +%Y%m%d)-${GITHUB_SHA::8}"
-          python release_notes.py build/Dictionary.db > build/notes.md
-          sha256sum build/Dictionary.db | cut -d' ' -f1 > build/Dictionary.db.sha256
-          gh release create "$TAG" build/Dictionary.db build/Dictionary.db.sha256 sources.json \
-            --title "$TAG" --notes-file build/notes.md --latest --target "$GITHUB_SHA"

@@ -1,8 +1,8 @@
 > **Repo workflow (KitveiHakodeshDictionary, 2026-11-03).** `source/` is the source of truth,
-> not a DB file. To add senses: `python build.py` (makes `build/Dictionary.db`), run the
-> import tool against `build/Dictionary.db`, then `python export.py` to write the change into
+> not a DB file. To add senses: `python build.py` (makes the DB - the app copy, or `build/Dictionary.db`; see `db_path.py`), run the
+> import tool against that DB, then `python export.py` to write the change into
 > `source/`, then `python build.py` again and commit `source/`. Paths below that mention
-> `CSharpBackend/...` or `scripts/...` are from the app repo; here they are `build/` and `import/`.
+> `CSharpBackend/...` or `scripts/...` are from the app repo; here they are `db_path.py` and `import/`.
 
 # How to add senses to the KitveiHakodesh dictionary
 

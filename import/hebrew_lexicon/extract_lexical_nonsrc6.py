@@ -23,7 +23,7 @@ import sqlite3, os, re, sys, json
 
 LEX=r"C:\Users\Public\Documents\Dictionary\Backup\lexical.db"
 import os
-DICT=os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "build", "Dictionary.db")
+DICT=__import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))), "db_path.py"))["dictionary_db"]()
 # Output dir: set LEXICON_OUT to point this somewhere specific, else a temp dir.
 SP=os.environ.get("LEXICON_OUT") or os.path.join(__import__("tempfile").gettempdir(), "hebrew_lexicon")
 os.makedirs(SP, exist_ok=True)

@@ -35,7 +35,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 REPO = os.path.abspath(os.path.join(HERE, "..", ".."))
-DB = os.path.join(REPO, "build", "Dictionary.db")
+DB = __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))), "db_path.py"))["dictionary_db"]()
 
 NIKUD_RE = re.compile(r"[֑-ׇ]")
 # Hebrew letters, nikud, space, geresh/gershayim, hyphen, and the parens and

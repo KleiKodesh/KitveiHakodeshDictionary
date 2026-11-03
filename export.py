@@ -1,16 +1,17 @@
 """Writes the readable source files from a Dictionary.db.
 
 Used once to extract the original DB (2026-11-03), and after every import script run:
-the import scripts change build/Dictionary.db, then this script writes the change back
+the import scripts change Dictionary.db (db_path.py), then this script writes the change back
 into source/, which is what gets committed.
 
-Run: python export.py [path/to/Dictionary.db]      (default: build/Dictionary.db)
+Run: python export.py [path/to/Dictionary.db]      (default: db_path.py - the app copy, else build/Dictionary.db)
 """
 
 import os
 import sqlite3
 import sys
 
+import db_path
 import tsv
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -76,4 +77,4 @@ def export(db_path):
 
 
 if __name__ == "__main__":
-    export(sys.argv[1] if len(sys.argv) > 1 else os.path.join(ROOT, "build", "Dictionary.db"))
+    export(sys.argv[1] if len(sys.argv) > 1 else db_path.dictionary_db())

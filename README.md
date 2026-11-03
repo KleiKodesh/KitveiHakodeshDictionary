@@ -3,13 +3,18 @@
 The source of the dictionary database (`Dictionary.db`) used by Kitvei Hakodesh
 (KleiKodesh). Everything needed to rebuild it lives here, as readable UTF-8 TSV files.
 
-## Download
+## Where the DB lives
 
-Latest build (published by CI on every push to `main`):
+The app's one working copy is
+`KleiKodeshProject/KitveiHakodesh/CSharpBackend/KitveiHakodesh.Core/Dictionary/Dictionary.db`
+(committed in KleiKodeshProject). Clone this repo as a sibling folder there:
 
-    https://github.com/KleiKodesh/KitveiHakodeshDictionary/releases/latest/download/Dictionary.db
+    cd KleiKodeshProject
+    git clone https://github.com/KleiKodesh/KitveiHakodeshDictionary.git
 
-Each release also carries `Dictionary.db.sha256` and the `sources.json` it was built from.
+and every script here reads and writes that file directly (see `db_path.py`). In a
+stand-alone clone they use `build/Dictionary.db`. This repo does not commit a DB and
+publishes no releases.
 
 ## Layout
 
@@ -25,21 +30,25 @@ Each release also carries `Dictionary.db.sha256` and the `sources.json` it was b
 | `sources.json` | manifest: origin, pin, sha256, license, fetch script, what each source feeds |
 | `fetch/fetch_sources.py` | downloads the re-fetchable sources, verifies sha256 |
 | `import/` | import scripts and audit data (how each source got in) |
+| `import/thesaurus_links/` | older one-off synonym-link tools, moved from the app repo as-is (their paths are the old app layout) |
 | `build.py` / `export.py` / `verify.py` | build the DB / write a DB back to `source/` / row-diff two DBs |
+| `db_path.py` | where the DB is: the app copy when found, else `build/Dictionary.db` |
+| `.github/workflows/build-dictionary.yml` | CI on push: verify pinned sources, build, round-trip check (no release) |
 
 TSV format: header line, tab-separated, LF, escapes `\\ \t \n \r`, NULL = `\N` (see `tsv.py`).
 
 ## Build
 
-    python build.py                 # -> build/Dictionary.db (Python 3.9+, stdlib only)
+    python build.py                 # -> the app's Dictionary.db, or build/Dictionary.db (Python 3.9+, stdlib only)
 
 ## Change the dictionary
 
-    python build.py
+    python build.py                            # DB = source/ (overwrites local DB edits!)
     python -I fetch/fetch_sources.py           # only if the import needs an upstream file
-    python import/<script>.py                  # changes build/Dictionary.db
+    python import/<script>.py                  # or edit the DB by hand; changes the DB in place
     python export.py                           # writes the change into source/
     python build.py && git add source sources.json && git commit
+    # then commit the updated Dictionary.db in KleiKodeshProject
 
 ## Licenses
 

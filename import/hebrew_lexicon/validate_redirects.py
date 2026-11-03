@@ -10,7 +10,7 @@ Usage: python validate_redirects.py redirects/batch_00N.json
 import csv, sqlite3, sys, json, os
 CSV=r"C:\Users\Public\Documents\Dictionary\Backup\merged_pealim_wikiDictinary_shorashim.csv"
 import os
-DB=os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), "build", "Dictionary.db")
+DB=__import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))), "db_path.py"))["dictionary_db"]()
 
 form_roots={}
 with open(CSV,encoding="utf-8",newline="") as f:

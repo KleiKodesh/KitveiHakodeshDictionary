@@ -63,7 +63,7 @@ EXCLUDE_PATH = os.path.join(HERE, "exclude.json")
 SOURCE_NAME = "מילון עברי"
 
 TARGETS = {
-    "service": os.path.join(REPO, "build", "Dictionary.db"),  # then: python export.py
+    "service": __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))), "db_path.py"))["dictionary_db"](),  # then: python export.py
 }
 
 NIKUD_RE = re.compile(r"[֑-ׇ]")

@@ -33,9 +33,9 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-# Changes build/Dictionary.db (made by build.py); then `python export.py` writes the
+# Changes Dictionary.db (db_path.py; made by build.py); then `python export.py` writes the
 # change back into source/. Input: fetch/downloads/dictionary.json (fetch/fetch_sources.py).
-DICT_DB = str(Path(__file__).resolve().parent.parent / "build" / "Dictionary.db")
+DICT_DB = __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__))), "db_path.py"))["dictionary_db"]()
 
 # "milon Peshita" (the main Aramaic list in Otzaria's dictionary.json)
 MAIN_LIST_NAME = "מילון פשיטא"

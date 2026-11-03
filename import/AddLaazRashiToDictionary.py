@@ -15,11 +15,11 @@ import sqlite3
 import re
 import sys
 
-# Repo layout: import scripts change build/Dictionary.db (made by build.py), then
+# Repo layout: import scripts change Dictionary.db (db_path.py; made by build.py), then
 # `python export.py` writes the change back into source/ - the committed source of truth.
 _REPO = __import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__)))
 SEFORIM_DB = __import__("os").environ.get("SEFORIM_DB", r"C:\ProgramData\otzaria\books\seforim.db")
-DICT_DB = __import__("os").path.join(_REPO, "build", "Dictionary.db")
+DICT_DB = __import__("runpy").run_path(__import__("os").path.join(__import__("os").path.dirname(__import__("os").path.dirname(__import__("os").path.abspath(__file__))), "db_path.py"))["dictionary_db"]()
 
 LAAZ_RASHI_SOURCE_NAME = "לעזי רש\"י"
 

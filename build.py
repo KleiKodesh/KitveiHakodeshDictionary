@@ -3,7 +3,8 @@
 Also writes a build_meta table: the sha256 of sources.json, each source's pin, and the
 sha256 of every source file, so a built DB says exactly what it was built from.
 
-Run: python build.py [--out build/Dictionary.db]
+Run: python build.py [--out PATH]   (default: db_path.py - the app copy when this repo sits
+     inside KleiKodeshProject, else build/Dictionary.db)
 """
 
 import argparse
@@ -13,6 +14,7 @@ import os
 import sqlite3
 import time
 
+import db_path
 import tsv
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -109,5 +111,5 @@ def build(out):
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out", default=os.path.join(ROOT, "build", "Dictionary.db"))
+    ap.add_argument("--out", default=db_path.dictionary_db())
     build(ap.parse_args().out)
