@@ -29,12 +29,11 @@ import sqlite3
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-DBS = [
-    os.path.normpath(os.path.join(
-        HERE, r"..\..\CSharpBackend\KitveiHakodesh.Core\Dictionary\Dictionary.db")),
-    os.path.normpath(os.path.join(
-        HERE, r"..\..\vue-frontend\public\dictionary\KitveiHakodesh_dictionary.db")),
-]
+# Dictionary.db location: db_path.py (the app's one copy when cloned inside KleiKodeshProject).
+_DB_PATH_PY = os.path.join(os.path.dirname(os.path.dirname(HERE)), "db_path.py")
+DICT_DB = __import__("runpy").run_path(_DB_PATH_PY)["dictionary_db"]()
+# There is one copy now (the frontend copy was retired).
+DBS = [DICT_DB]
 
 NAME_WORD_ID = 5440          # headword 'י-ה'
 BILAVA_SENSE = 29276

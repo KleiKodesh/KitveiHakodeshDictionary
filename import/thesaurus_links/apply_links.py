@@ -26,13 +26,11 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 SQL_FILE = os.path.join(HERE, "proposed_nardaf_links.sql")
 
-# Both copies must stay identical (see Dictionary/ADDING_SENSES.md).
-DBS = [
-    os.path.normpath(os.path.join(
-        HERE, r"..\..\CSharpBackend\KitveiHakodesh.Core\Dictionary\Dictionary.db")),
-    os.path.normpath(os.path.join(
-        HERE, r"..\..\vue-frontend\public\dictionary\KitveiHakodesh_dictionary.db")),
-]
+# Dictionary.db location: db_path.py (the app's one copy when cloned inside KleiKodeshProject).
+_DB_PATH_PY = os.path.join(os.path.dirname(os.path.dirname(HERE)), "db_path.py")
+DICT_DB = __import__("runpy").run_path(_DB_PATH_PY)["dictionary_db"]()
+# There is one copy now (the frontend copy was retired).
+DBS = [DICT_DB]
 
 NARDAF_COUNT = ("SELECT COUNT(*) FROM link WHERE kind_id="
                 "(SELECT id FROM link_kind WHERE name='נרדף')")

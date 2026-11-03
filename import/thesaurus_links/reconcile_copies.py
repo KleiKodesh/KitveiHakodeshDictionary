@@ -21,10 +21,13 @@ import sqlite3
 import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-SVC = os.path.normpath(os.path.join(
-    HERE, r"..\..\CSharpBackend\KitveiHakodesh.Core\Dictionary\Dictionary.db"))
-FE = os.path.normpath(os.path.join(
-    HERE, r"..\..\vue-frontend\public\dictionary\KitveiHakodesh_dictionary.db"))
+# Dictionary.db location: db_path.py (the app's one copy when cloned inside KleiKodeshProject).
+_DB_PATH_PY = os.path.join(os.path.dirname(os.path.dirname(HERE)), "db_path.py")
+DICT_DB = __import__("runpy").run_path(_DB_PATH_PY)["dictionary_db"]()
+SVC = DICT_DB
+# HISTORICAL: the frontend copy no longer exists (one DB copy since 2026-11-03), so this
+# one-off cannot run again; pass the old frontend DB path as env RECONCILE_FE_DB to replay it.
+FE = os.environ.get("RECONCILE_FE_DB", "")
 
 DIVINE_NAME = "י-ה"   # י-ה  (service value, with maqaf)
 JUNK_SENSE_ID = 7483

@@ -12,7 +12,13 @@ Aramaic source (source_id 1, the earlier version of this list) stores it:
   - `***` separates senses -> one sense row per part
   - a leading `{vocalized form}` goes to sense.nikud, not into the text
   - whitespace collapsed, trailing '.', ',', ';', ':' dropped
-  - parentheses / brackets / '=' notes are kept as written (source 1 keeps them)
+  - parentheses / brackets / '=' notes are kept as written (source 1 keeps them),
+    except the cleanup rules in cleanup_sense():
+      a) a sense that is only a cross-reference is dropped (the whole meaning sits in
+         parentheses, or it starts with the word for "see" and names where to look)
+      b) a sense whose meaning equals the headword is dropped
+      c) editorial [..] notes starting with the abbreviations for "thus" / "see" are
+         removed; brackets around single letters ("[l]") stay
 Headwords are stored without nikud.
 
 Dedupe: a sense whose normalized text (nikud stripped, whitespace collapsed,
@@ -73,6 +79,44 @@ def clean_sense(part: str) -> tuple[str | None, str]:
     return nikud, part
 
 
+# c) editorial square-bracket notes: "[kakh ...]", "[k\"k ...]", "[ayn' ...]", "[ayn-yod' ...]", "[ayin ...]"
+# (an abbreviation mark is any punctuation: ' " or the Hebrew geresh/gershayim).
+EDITORIAL_BRACKET_RE = re.compile(r'\s*\[(?:כך|כ"כ|ע[^\s\w\[\]]|עי[^\s\w\[\]]|עיין)[^\]]*\]')
+SEE_WORD = 'ראה'  # "see" - but also the verb "saw" (glosses of chaza/chazei), so a "see ..."
+# sense counts as a cross-reference only when it also names a place to look:
+# "entry", "above", "below", "what was written".
+SEE_REFERENCE_MARKERS = ('ערך', 'לעיל', 'לקמן', 'מ"ש')
+
+
+def _only_parenthesized(text: str) -> bool:
+    """True when the whole text is one (...) group."""
+    if not (text.startswith('(') and text.endswith(')')):
+        return False
+    depth = 0
+    for i, ch in enumerate(text):
+        depth += ch == '('
+        depth -= ch == ')'
+        if depth == 0 and i < len(text) - 1:
+            return False
+    return depth == 0
+
+
+def cleanup_sense(headword: str, text: str) -> tuple[str | None, str | None]:
+    """Applies cleanup rules a-c. Returns (text or None when dropped, rule letter or None)."""
+    rule = None
+    stripped = EDITORIAL_BRACKET_RE.sub('', text)
+    if stripped != text:
+        rule = 'c'
+        text = re.sub(r'\s+([)\]])', r'\1', re.sub(r'\s+', ' ', stripped)).strip().rstrip('.,;:').strip()
+    plain = strip_nikud(text).strip()
+    if not plain or _only_parenthesized(plain) or (plain.startswith(SEE_WORD + ' ')
+                                                      and any(m in plain for m in SEE_REFERENCE_MARKERS)):
+        return None, 'a'
+    if plain.rstrip('.,;:').strip() == headword:
+        return None, 'b'
+    return text, rule
+
+
 def load_entries(json_path: str):
     """Returns (headword -> [(nikud, text)] in order, stats)."""
     with open(json_path, encoding='utf-8') as f:
@@ -90,6 +134,11 @@ def load_entries(json_path: str):
                 continue
             for part in meaning.split('***'):
                 nikud, text = clean_sense(part)
+                if not text:
+                    continue
+                text, rule = cleanup_sense(headword, text)
+                if rule:
+                    stats[f'cleanup_rule_{rule}'] += 1
                 if not text:
                     continue
                 stats['senses_in_source'] += 1
