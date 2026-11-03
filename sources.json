@@ -1,0 +1,162 @@
+{
+  "manifest_version": 1,
+  "note": "One entry per source. 'frozen' entries have no known upstream any more: their rows were extracted from the app's Dictionary.db on 2026-11-03 and the TSV in this repo is now the original. Fetchable entries are downloaded by fetch/fetch_sources.py, which fails on a sha256 mismatch.",
+  "sources": [
+    {
+      "id": "source_kind_01_aramaic_hebrew",
+      "name": "Aramaic-Hebrew dictionary (source_kind 1)",
+      "description": "Aramaic-Hebrew glossary, the earlier version of the Otzaria Peshita list.",
+      "origin": null,
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "unknown (origin not recorded)",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_01.tsv", "word"]
+    },
+    {
+      "id": "source_kind_02_wikipedia_acronyms",
+      "name": "Hebrew Wikipedia - acronyms (source_kind 2)",
+      "description": "Acronym expansions from Hebrew Wikipedia lists.",
+      "origin": "https://he.wikipedia.org (exact pages not recorded)",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "CC BY-SA (Wikipedia text license); attribution: Hebrew Wikipedia contributors",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_02.tsv", "word"]
+    },
+    {
+      "id": "source_kind_03_kitzur_rashei_teivot",
+      "name": "Kitzur Rashei Teivot - acronyms (source_kind 3)",
+      "description": "Acronym list.",
+      "origin": null,
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "unknown (origin not recorded)",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_03.tsv", "word"]
+    },
+    {
+      "id": "source_kind_04_wikisource_acronyms",
+      "name": "Wiki Sifrei Yahadut - acronyms (source_kind 4)",
+      "description": "Acronym expansions from a Jewish-books wiki.",
+      "origin": null,
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "unknown (origin not recorded; wiki content is usually CC BY-SA)",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_04.tsv", "word"]
+    },
+    {
+      "id": "source_kind_05_hamichlol",
+      "name": "HaMichlol (source_kind 5)",
+      "description": "Definitions from the HaMichlol encyclopedia.",
+      "origin": "https://www.hamichlol.org.il (exact pages not recorded)",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "CC BY-SA (HaMichlol site license, not re-checked); attribution: HaMichlol contributors",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_05.tsv", "word"]
+    },
+    {
+      "id": "source_kind_06_hebrew_dictionary",
+      "name": "Hebrew dictionary (source_kind 6)",
+      "description": "Base Hebrew dictionary plus everyday-word additions made with import/hebrew_lexicon (batches under import/hebrew_lexicon/terms).",
+      "origin": "base: not recorded; additions: import/hebrew_lexicon in this repo",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "base: unknown; additions: own work",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_06.tsv", "word", "link (spelling redirects)"]
+    },
+    {
+      "id": "source_kind_07_radak_shorashim",
+      "name": "Radak, Sefer HaShorashim (source_kind 7)",
+      "description": "Roots dictionary of the Radak.",
+      "origin": null,
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "public-domain text; digital edition origin not recorded",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_07.tsv", "word"]
+    },
+    {
+      "id": "source_kind_08_laaz_rashi",
+      "name": "Laazei Rashi (source_kind 8)",
+      "description": "Old-French glosses of Rashi, parsed from book id 5747 of the Otzaria library seforim.db by import/AddLaazRashiToDictionary.py.",
+      "origin": "Otzaria library seforim.db (book id 5747); library version used was not recorded",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "Otzaria library content; attribution: Otzaria project",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_08.tsv", "word"]
+    },
+    {
+      "id": "otzaria_acronyms_json",
+      "name": "Otzaria Acronyms.json (source_kind 9)",
+      "description": "Otzaria's acronym asset, imported by import/AddOtzariaAcronymsToDictionary.py.",
+      "origin": "https://raw.githubusercontent.com/Otzaria/otzaria/333662eb2cf358c60e3a9d0ca1261aba543396b1/assets/Acronyms.json",
+      "pin": "Otzaria/otzaria commit 333662eb2cf358c60e3a9d0ca1261aba543396b1 (last change to the file on branch dev as of 2026-11-03). NOT VERIFIED that the rows in source_09.tsv came from this exact version: the original import read a local Otzaria install.",
+      "sha256": "4c6a9127a02c06d8cb8dab39b401df7f179b9a8b9372ecb983a248e7881ecfc2",
+      "license": "Otzaria Personal Use License 1.0 (repo LICENSE); attribution: Otzaria project",
+      "fetch": "fetch/fetch_sources.py otzaria_acronyms_json",
+      "local_path": "fetch/downloads/Acronyms.json",
+      "feeds": ["sense: source/senses/source_09.tsv", "word"]
+    },
+    {
+      "id": "source_kind_10_yad_meir_acronyms",
+      "name": "Yad Meir - acronyms (source_kind 10)",
+      "description": "Acronym list.",
+      "origin": null,
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "unknown (origin not recorded)",
+      "fetch": null,
+      "feeds": ["sense: source/senses/source_10.tsv", "word"]
+    },
+    {
+      "id": "otzaria_dictionary_json",
+      "name": "Otzaria dictionary.json - Peshita list (source_kind 11)",
+      "description": "Otzaria's Aramaic-Hebrew dictionary asset (main list only), imported by import/AddOtzariaAramaicToDictionary.py.",
+      "origin": "https://raw.githubusercontent.com/Otzaria/otzaria/a4c54cd223eb9d1bdf4c239975722da4fc5069c8/assets/dictionary.json",
+      "pin": "Otzaria/otzaria commit a4c54cd223eb9d1bdf4c239975722da4fc5069c8 (2026-10-27)",
+      "sha256": "65ec2606de9e1475a585d8eb37b538349ab9baa59f676b3b0dd5432d4bdd49b3",
+      "license": "Otzaria Personal Use License 1.0 (repo LICENSE); attribution: Otzaria project",
+      "fetch": "fetch/fetch_sources.py otzaria_dictionary_json",
+      "local_path": "fetch/downloads/dictionary.json",
+      "feeds": ["sense: source/senses/source_11.tsv", "word"]
+    },
+    {
+      "id": "links",
+      "name": "Word links",
+      "description": "Synonym / spelling / see-also / antonym / derived links between words (link_kind 1-5). 458 rows point at word ids that no longer exist; kept as-is.",
+      "origin": "own work (import/hebrew_lexicon redirect tooling and earlier manual work)",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "own work",
+      "fetch": null,
+      "feeds": ["link: source/links.tsv", "link_kind: source/link_kind.tsv"]
+    },
+    {
+      "id": "seforim_headword_index",
+      "name": "Reference-work headword index",
+      "description": "Headword positions of five reference works inside seforim.db, made by import/build_seforim_headword_index.py.",
+      "origin": "Otzaria library seforim.db (SeforimLibrary schema 6); library version used was not recorded",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "index only (titles + line numbers + headword tokens); attribution: Otzaria project",
+      "fetch": null,
+      "feeds": ["seforim_headword: source/seforim_headword.tsv", "seforim_headword_book: source/seforim_headword_book.tsv"]
+    },
+    {
+      "id": "schema_and_kinds",
+      "name": "Schema, source kinds, planner statistics",
+      "description": "Table definitions, source_kind names, sqlite_stat1.",
+      "origin": "own work",
+      "pin": "frozen: extracted from Dictionary.db on 2026-11-03",
+      "sha256": null,
+      "license": "own work",
+      "fetch": null,
+      "feeds": ["source/schema.sql", "source/source_kind.tsv", "source/sqlite_stat1.tsv", "source/words.tsv"]
+    }
+  ]
+}

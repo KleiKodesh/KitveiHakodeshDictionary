@@ -1,0 +1,9 @@
+tbl	idx	stat
+link	index_link_target	7369 2
+link	index_link_word	7369 2
+link	sqlite_autoindex_link_1	7369 2 1 1
+link_kind	sqlite_autoindex_link_kind_1	5 1
+sense	index_sense_word	39353 2
+source_kind	sqlite_autoindex_source_kind_1	9 1
+word	index_word_headword	23664 1
+word	sqlite_autoindex_word_1	23664 1

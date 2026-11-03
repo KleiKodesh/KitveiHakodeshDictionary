@@ -1,0 +1,49 @@
+name: Build Dictionary.db
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-dictionary
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Proves every pinned upstream file still matches its sha256 in sources.json.
+      - name: Verify fetchable sources
+        run: python -I fetch/fetch_sources.py
+
+      - name: Build
+        run: python build.py --out build/Dictionary.db
+
+      # A rebuild from the DB's own export must give the same content (round trip).
+      - name: Round-trip check
+        run: |
+          python export.py build/Dictionary.db
+          git diff --exit-code -- source
+          python build.py --out build/roundtrip.db
+          python verify.py build/Dictionary.db build/roundtrip.db
+
+      - name: Publish release (marked latest)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="dict-$(date -u +%Y%m%d)-${GITHUB_SHA::8}"
+          python release_notes.py build/Dictionary.db > build/notes.md
+          sha256sum build/Dictionary.db | cut -d' ' -f1 > build/Dictionary.db.sha256
+          gh release create "$TAG" build/Dictionary.db build/Dictionary.db.sha256 sources.json \
+            --title "$TAG" --notes-file build/notes.md --latest --target "$GITHUB_SHA"
