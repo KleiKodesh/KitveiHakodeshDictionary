@@ -18,7 +18,10 @@ CREATE TABLE "sense" (
         word_id   INTEGER NOT NULL REFERENCES word(id),
         nikud     TEXT,
         text      TEXT    NOT NULL,
-        source_id INTEGER REFERENCES source_kind(id)
+        source_id INTEGER REFERENCES source_kind(id),
+        -- Display order among the word's senses (1 = first); NULL = unranked, after the
+        -- ranked ones in id order. Filled from source/sense_rank.tsv.
+        rank      INTEGER
     );
 
 CREATE TABLE "link" (

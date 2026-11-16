@@ -24,6 +24,7 @@ publishes no releases.
 | `source/source_kind.tsv`, `source/link_kind.tsv` | source and link kinds |
 | `source/words.tsv` | every headword with its id |
 | `source/senses/source_NN.tsv` | the senses of source_kind NN (one file per source) |
+| `source/sense_rank.tsv` | display order of a word's senses (`sense.rank`; today: abbreviations ranked by Dicta) |
 | `source/links.tsv` | links between words (ids authoritative, headwords for reading) |
 | `source/seforim_headword*.tsv` | headword index into reference works in seforim.db |
 | `source/sqlite_stat1.tsv` | query-planner statistics |
@@ -33,6 +34,7 @@ publishes no releases.
 | `import/thesaurus_links/` | older one-off synonym-link tools, moved from the app repo as-is (their paths are the old app layout) |
 | `build.py` / `export.py` / `verify.py` | build the DB / write a DB back to `source/` / row-diff two DBs |
 | `db_path.py` | where the DB is: the app copy when found, else `build/Dictionary.db` |
+| `import/dicta_abbreviations/` + `.github/workflows/dicta-abbreviations.yml` | Dicta abbreviation expander: resumable query (cache on branch `dicta-cache`), then `apply_dicta.py` writes source_kind 12 senses + `sense_rank.tsv` (manual workflow run; opens a PR) |
 | `.github/workflows/build-dictionary.yml` | CI on push: verify pinned sources, build, round-trip check (no release) |
 
 TSV format: header line, tab-separated, LF, escapes `\\ \t \n \r`, NULL = `\N` (see `tsv.py`).

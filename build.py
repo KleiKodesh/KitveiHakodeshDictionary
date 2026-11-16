@@ -68,6 +68,11 @@ def build(out):
         step(f"senses/{name}: {n} rows")
     senses.sort()
     con.executemany("INSERT INTO sense (id, word_id, nikud, text, source_id) VALUES (?,?,?,?,?)", senses)
+    rank_file = os.path.join(SOURCE, "sense_rank.tsv")
+    if os.path.exists(rank_file):
+        ranks = [(int(r["rank"]), int(r["sense_id"])) for r in tsv.read(rank_file)]
+        con.executemany("UPDATE sense SET rank = ? WHERE id = ?", ranks)
+        step(f"sense.rank <- sense_rank.tsv: {len(ranks)} rows")
 
     links = [(int(r["word_id"]), int(r["target_id"]), int(r["kind_id"]))
              for r in tsv.read(os.path.join(SOURCE, "links.tsv"))]
