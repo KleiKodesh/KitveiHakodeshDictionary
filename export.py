@@ -52,6 +52,17 @@ def export(db_path):
         tsv.write(os.path.join(SOURCE, "senses", name), ["id", "headword", "nikud", "text"], rows)
         step(f"senses/{name}: {len(rows)} rows")
 
+    # Sense display ranks (sense.rank), kept apart so the senses files stay unchanged.
+    rows = con.execute(
+        "SELECT s.id, s.rank, w.headword, s.text FROM sense s JOIN word w ON w.id = s.word_id "
+        "WHERE s.rank IS NOT NULL ORDER BY s.id").fetchall()
+    rank_file = os.path.join(SOURCE, "sense_rank.tsv")
+    if rows:
+        tsv.write(rank_file, ["sense_id", "rank", "headword", "text"], rows)
+    elif os.path.exists(rank_file):
+        os.remove(rank_file)
+    step(f"sense_rank.tsv: {len(rows)} rows")
+
     rows = con.execute(
         "SELECT l.word_id, l.target_id, l.kind_id, w.headword, t.headword FROM link l "
         "LEFT JOIN word w ON w.id = l.word_id LEFT JOIN word t ON t.id = l.target_id "

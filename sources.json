@@ -126,6 +126,17 @@
       "feeds": ["sense: source/senses/source_11.tsv", "word"]
     },
     {
+      "id": "dicta_abbreviation_expander",
+      "name": "Dicta abbreviation expander (source_kind 12) + sense ranks",
+      "description": "Ranked expansions from Dicta's abbreviation expander (task abbrexp, genre rabbinic) for every abbreviation headword, queried by import/dicta_abbreviations/query_dicta.py and applied by apply_dicta.py.",
+      "origin": "https://nakdan-u2-1a.loadbalancer.dicta.org.il/api (cache: branch dicta-cache, dicta_abbreviations.jsonl)",
+      "pin": "dicta-cache branch commit 700378d (2026-11-16)",
+      "sha256": "60e71794d2e71e04691d4c46eb0bbfc2e29c33978248b59d76c43efbf42841d9",
+      "license": "Dicta (dicta.org.il), used with permission for bulk use; attribution: Dicta",
+      "fetch": "import/dicta_abbreviations/query_dicta.py (resumable; CI workflow dicta-abbreviations.yml)",
+      "feeds": ["sense: source/senses/source_12.tsv", "sense.rank: source/sense_rank.tsv", "source_kind: source/source_kind.tsv"]
+    },
+    {
       "id": "links",
       "name": "Word links",
       "description": "Synonym / spelling / see-also / antonym / derived links between words (link_kind 1-5). 458 rows point at word ids that no longer exist; kept as-is.",
