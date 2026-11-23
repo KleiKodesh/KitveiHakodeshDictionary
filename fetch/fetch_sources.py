@@ -30,7 +30,9 @@ def download(url):
 
 def main(wanted):
     with open(os.path.join(ROOT, "sources.json"), encoding="utf-8") as f:
-        sources = [s for s in json.load(f)["sources"] if s.get("fetch")]
+        # Only the sources this script downloads; others name their own tool in "fetch".
+        sources = [s for s in json.load(f)["sources"]
+                   if (s.get("fetch") or "").startswith("fetch/fetch_sources.py")]
     if wanted:
         sources = [s for s in sources if s["id"] in wanted]
     failed = 0

@@ -30,6 +30,16 @@ jobs:
       - name: Build
         run: python build.py --out build/Dictionary.db
 
+      - name: Key counts
+        run: |
+          python - <<'EOF'
+          import sqlite3
+          c = sqlite3.connect("build/Dictionary.db")
+          for t in ("word", "sense", "link"):
+              print(t, c.execute(f"select count(*) from {t}").fetchone()[0])
+          print("links by kind", c.execute("select kind_id, count(*) from link group by 1").fetchall())
+          EOF
+
       # A rebuild from the DB's own export must give the same content (round trip).
       - name: Round-trip check
         run: |
