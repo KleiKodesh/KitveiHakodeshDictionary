@@ -31,7 +31,7 @@ publishes no releases.
 | `sources.json` | manifest: origin, pin, sha256, license, fetch script, what each source feeds |
 | `fetch/fetch_sources.py` | downloads the re-fetchable sources, verifies sha256 |
 | `import/` | import scripts and audit data (how each source got in) |
-| `import/thesaurus_links/` | older one-off synonym-link tools, moved from the app repo as-is (their paths are the old app layout) |
+| `import/divine_name/` | one-off script that removed a Divine Name entry and scrubbed it from sense texts |
 | `build.py` / `export.py` / `verify.py` | build the DB / write a DB back to `source/` / row-diff two DBs |
 | `db_path.py` | where the DB is: the app copy when found, else `build/Dictionary.db` |
 | `import/dicta_abbreviations/` + `.github/workflows/dicta-abbreviations.yml` | Dicta abbreviation expander: resumable query (cache on branch `dicta-cache`), then `apply_dicta.py` writes source_kind 12 senses + `sense_rank.tsv` (manual workflow run; opens a PR) |
